@@ -14,7 +14,8 @@ jobs:
 
       - name: Download recalls CSV
         run: |
-          curl -o recalls.csv https://recalls-rappels.canada.ca/sites/default/files/opendata-donneesouvertes/HCRSAMOpenData.csv
+          curl --http1.1 -o recalls.csv https://recalls-rappels.canada.ca/sites/default/files/opendata-donneesouvertes/HCRSAMOpenData.csv
+
 
       - name: Commit and push if changed
         run: |
