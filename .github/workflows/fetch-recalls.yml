@@ -12,9 +12,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Download recalls CSV
-        run: |
-          curl --http1.1 --retry 5 --retry-delay 5 -C - -o recalls.csv https://recalls-rappels.canada.ca/sites/default/files/opendata-donneesouvertes/HCRSAMOpenData.csv
+     - name: Download recalls CSV
+  run: |
+    wget --retry-connrefused --waitretry=5 --read-timeout=20 --timeout=15 -t 5 -O recalls.csv https://recalls-rappels.canada.ca/sites/default/files/opendata-donneesouvertes/HCRSAMOpenData.csv
 
 
       - name: Commit and push if changed
