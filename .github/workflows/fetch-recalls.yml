@@ -1,0 +1,25 @@
+name: Download Canada Recalls CSV Daily
+
+on:
+  schedule:
+    - cron: "0 14 * * *"  # every day at 10AM EST / 2PM UTC
+  workflow_dispatch:     # also allow manual runs
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Download recalls CSV
+        run: |
+          curl -o recalls.csv https://recalls-rappels.canada.ca/sites/default/files/opendata-donneesouvertes/HCRSAMOpenData.csv
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "auto-bot"
+          git config user.email "actions@github.com"
+          git add recalls.csv
+          git commit -m "🗂️ Auto-update recalls CSV" || echo "No changes to commit"
+          git push
